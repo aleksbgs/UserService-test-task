@@ -2,7 +2,7 @@ using MediatR;
 
 namespace UserService.Application.Commands;
 
-public class UpdateUserCommand : IRequest<Unit>
+public class UpdateUserCommand : IRequest<bool>
 {
     public int Id { get; set; }
     public string? Name { get; set; }
