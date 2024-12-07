@@ -15,7 +15,9 @@
       interval: 10s
       timeout: 10s
       retries: 3
-  
+    networks:
+      - users-network
+   
   userservice.api:
     container_name: userservice.api
     environment:
@@ -28,4 +30,10 @@
     depends_on:
       - usersDb
     ports:
-      - "8003:8080"    
+      - "8003:8080"
+    networks:
+      - users-network
+
+networks:
+  users-network:
+    driver: bridge
