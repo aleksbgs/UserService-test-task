@@ -12,7 +12,7 @@ public static class InfraServices
     public static IServiceCollection AddInfraServices(this IServiceCollection serviceCollection, IConfiguration configuration)
     {
         serviceCollection.AddDbContext<UserContext>(options => options.UseSqlServer(
-            configuration.GetConnectionString("OrderingConnectionString"),
+            configuration.GetConnectionString("ConnectionString"),
             sqlServerOptions => sqlServerOptions.EnableRetryOnFailure()));
         serviceCollection.AddScoped(typeof(IAsyncRepository<>), typeof(RepositoryBase<>));
         serviceCollection.AddScoped<IUserRepository, UserRepository>();

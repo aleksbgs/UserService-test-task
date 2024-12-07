@@ -9,7 +9,7 @@ namespace UserService.Infrastructure.Data
         public UserContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<UserContext>();
-            optionsBuilder.UseSqlServer("Data Source=OrderDb");
+            optionsBuilder.UseSqlServer("Data Source=usersDb");
             return new UserContext(optionsBuilder.Options);
         }
     }
