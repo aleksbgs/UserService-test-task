@@ -31,6 +31,9 @@
       - usersDb
     ports:
       - "8003:8080"
+    command: >
+      /bin/sh -c "dotnet ef database update -p ../UserService.Infrastructure -s ../UserService.API && dotnet UserService.API.dll"
+      
     networks:
       - users-network
 
