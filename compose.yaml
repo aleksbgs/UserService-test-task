@@ -27,3 +27,5 @@
       dockerfile: UserService.API/Dockerfile
     depends_on:
       - usersDb
+    ports:
+      - "8003:8080"    
