@@ -1,0 +1,20 @@
+# This is a generated file. Not intended for manual editing.
+services:
+  userservice.api:
+    build:
+      context: "/Users/admin/Desktop/UserService-test-task/UserService-test-task"
+      dockerfile: "UserService.API/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net8.0/UserService.API.dll"
+    environment:
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "userservice.api:dev"
+    ports: []
+    volumes:
+    - "/Users/admin/Desktop/UserService-test-task/UserService-test-task/UserService.API:/app:rw"
+    - "/Users/admin/Desktop/UserService-test-task/UserService-test-task:/src:rw"
+    - "/Users/admin/.nuget/packages:/home/app/.nuget/packages"
+    working_dir: "/app"

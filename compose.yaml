@@ -1,24 +1,29 @@
 ﻿services:
-  usersdb:
-    container_name: usersdb
+  
+  usersDb:
+    platform: linux/amd64
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: usersDb
     environment:
-      SA_PASSWORD: "password"
+      SA_PASSWORD: "password1!"
       ACCEPT_EULA: "Y"
     restart: always
     ports:
       - "1433:1433"
-    volumes:
-      - orderdb-data:/var/opt/mssql
     healthcheck:
-      test: [ "CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P 'password' -Q 'select 1'" ]
+      test: [ "CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P 'password1!' -Q 'select 1'" ]
       interval: 10s
       timeout: 10s
       retries: 3
   
   userservice.api:
+    container_name: userservice.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings__ConnectionString=Server=usersDb;Database=usersDb;User Id=sa;Password=password1!;TrustServerCertificate=True"
     image: userservice.api
     build:
       context: .
       dockerfile: UserService.API/Dockerfile
     depends_on:
-      - usersdb
+      - usersDb
