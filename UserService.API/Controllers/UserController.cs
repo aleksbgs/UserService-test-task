@@ -17,15 +17,6 @@ public class UserController : ApiController
         _mediator = mediator;
         _logger = logger;
     }
-    //Testing route for checking seed
-    [HttpGet("{userName}", Name = "GetUserByUserName")]
-    [ProducesResponseType(typeof(IEnumerable<UserResponse>), (int)HttpStatusCode.OK)]
-    public async Task<ActionResult<IEnumerable<UserResponse>>> GetUserByUserName(string userName)
-    {
-        var query = new GetUserListQuery(userName);
-        var user = await _mediator.Send(query);
-        return Ok(user);
-    }
     [HttpPost("CreateUser")]
     [ProducesResponseType(typeof(IEnumerable<UserResponse>), (int)HttpStatusCode.OK)]
     public async Task<ActionResult<IEnumerable<UserResponse>>> CreateUser([FromBody] CreateUserCommand createUserCommand)
@@ -33,6 +24,23 @@ public class UserController : ApiController
         var user = await _mediator.Send(createUserCommand);
         return Ok(user);
     }
+    [HttpPut(Name = "UpdateUserRole")]
+    [ProducesResponseType(typeof(IEnumerable<UserResponse>), (int)HttpStatusCode.OK)]
+    public async Task<ActionResult<int>> UpdateUserRole([FromBody] UpdateUserCommand command)
+    {
+        var result = await _mediator.Send(command);
+        return Ok(result);
+    }
+    [HttpGet]
+    [Route("GetUsers")]
+    [ProducesResponseType(typeof(IList<UserResponse>), (int)HttpStatusCode.OK)]
+    public async Task<ActionResult<IList<UserResponse>>> GetUsers()
+    {
+        var query = new GetAllUsersQuery();
+        var result = await _mediator.Send(query);
+        return Ok(result);
+    }
+
     
     
     

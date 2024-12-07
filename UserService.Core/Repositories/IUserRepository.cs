@@ -5,8 +5,5 @@ namespace UserService.Core.Repositories;
 
 public interface IUserRepository: IAsyncRepository<User>
 {
-    Task<IEnumerable<User>> GetUsers();
-    Task<IEnumerable<User>> CreateUser();
-    Task<IEnumerable<User>> UpdateUserRole();
-    Task<IEnumerable<User>> GetUserByUserName(string userName);
+    Task<IEnumerable<User>> GetAllUsers();
 }
