@@ -3,6 +3,7 @@ using UserService.Application.Commands;
 
 namespace UserService.Application.Validators;
 
+
 public class UpdateUserCommandValidator : AbstractValidator<UpdateUserCommand>
 {
 
@@ -18,7 +19,8 @@ public class UpdateUserCommandValidator : AbstractValidator<UpdateUserCommand>
         RuleFor(u => u.Role)
             .NotEmpty()
             .NotNull()
-            .WithMessage("{RoleName} is required");
+            .Must(u => new[]{"Admin", "User"}.Contains(u))
+            .WithMessage("{RoleName} is required and must be Admin or User");
 
     }
 
