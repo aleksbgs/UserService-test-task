@@ -7,28 +7,22 @@ using UserService.Application.Responses;
 
 namespace UserService.API.Controllers;
 
-public class UserController : ApiController
+public class UserController(IMediator mediator, ILogger<UserController> logger) : ApiController
 {
-    private readonly IMediator _mediator;
-    private readonly ILogger<UserController> _logger;
+    private readonly ILogger<UserController> _logger = logger;
 
-    public UserController(IMediator mediator, ILogger<UserController> logger)
-    {
-        _mediator = mediator;
-        _logger = logger;
-    }
     [HttpPost("CreateUser")]
     [ProducesResponseType(typeof(IEnumerable<UserResponse>), (int)HttpStatusCode.OK)]
     public async Task<ActionResult<IEnumerable<UserResponse>>> CreateUser([FromBody] CreateUserCommand createUserCommand)
     {
-        var user = await _mediator.Send(createUserCommand);
+        var user = await mediator.Send(createUserCommand);
         return Ok(user);
     }
     [HttpPut(Name = "UpdateUserRole")]
     [ProducesResponseType(typeof(IEnumerable<UserResponse>), (int)HttpStatusCode.OK)]
     public async Task<ActionResult<int>> UpdateUserRole([FromBody] UpdateUserCommand command)
     {
-        var result = await _mediator.Send(command);
+        var result = await mediator.Send(command);
         return Ok(result);
     }
     [HttpGet]
@@ -37,13 +31,8 @@ public class UserController : ApiController
     public async Task<ActionResult<IList<UserResponse>>> GetUsers()
     {
         var query = new GetAllUsersQuery();
-        var result = await _mediator.Send(query);
+        var result = await mediator.Send(query);
         return Ok(result);
     }
-
-    
-    
-    
-    
     
 }

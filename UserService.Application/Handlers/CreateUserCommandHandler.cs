@@ -9,15 +9,9 @@ using UserService.Core.Repositories;
 
 namespace UserService.Application.Handlers;
 
-public class CreateUserCommandHandler: IRequestHandler<CreateUserCommand, UserResponse>
+public class CreateUserCommandHandler(IAsyncRepository<User> userRepository)
+    : IRequestHandler<CreateUserCommand, UserResponse>
 {
-    private readonly IUserRepository _userRepository;
-    
-    public CreateUserCommandHandler(IUserRepository userRepository)
-    {
-        _userRepository = userRepository;
-    }
-    
     public async Task<UserResponse> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
         var userEntity = UserMapper.Mapper.Map<User>(request);
@@ -28,7 +22,7 @@ public class CreateUserCommandHandler: IRequestHandler<CreateUserCommand, UserRe
         {
             throw new ApplicationException("There is an issue with mapping while creating new user");
         }
-        var newUser = await _userRepository.AddAsync(userEntity);
+        var newUser = await userRepository.AddAsync(userEntity);
         var userResponse = UserMapper.Mapper.Map<UserResponse>(newUser);
         return userResponse;
     }

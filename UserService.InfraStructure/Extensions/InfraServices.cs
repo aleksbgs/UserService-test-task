@@ -15,7 +15,6 @@ public static class InfraServices
             configuration.GetConnectionString("ConnectionString"),
             sqlServerOptions => sqlServerOptions.EnableRetryOnFailure()));
         serviceCollection.AddScoped(typeof(IAsyncRepository<>), typeof(RepositoryBase<>));
-        serviceCollection.AddScoped<IUserRepository, UserRepository>();
         return serviceCollection;
     }
 }

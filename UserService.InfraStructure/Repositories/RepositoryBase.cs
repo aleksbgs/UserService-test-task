@@ -7,14 +7,11 @@ using UserService.InfraStructure.Data;
 namespace UserService.InfraStructure.Repositories;
 
 
-public class RepositoryBase<T> : IAsyncRepository<T> where T : EntityBase
+public class RepositoryBase<T>(UserContext dbContext) : IAsyncRepository<T>
+    where T : EntityBase
 {
-    protected readonly UserContext _dbContext;
+    protected readonly UserContext _dbContext = dbContext;
 
-    public RepositoryBase(UserContext dbContext)
-    {
-        _dbContext = dbContext;
-    }
     public async Task<IReadOnlyList<T>> GetAllAsync()
     {
         return await _dbContext.Set<T>().ToListAsync();
